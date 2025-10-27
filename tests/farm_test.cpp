@@ -62,3 +62,48 @@ TEST_CASE("it allows us to plant a carrot")
     farm.plant(0, 1, &carrot);
     REQUIRE(farm.get_symbol(0, 1) == "v");
 }
+
+TEST_CASE("it allows to plant")
+{
+    Player player;
+    Farm farm(1, 1, &player);
+    Carrot carrot;
+    farm.plant(0, 0, &carrot);
+    player.move_right();
+    REQUIRE(farm.get_symbol(0, 0) == "v");
+}
+
+TEST_CASE("it prevents from planting at an occupied spot")
+{
+    Player player;
+    Farm farm(2, 2, &player);
+    Carrot carrot1;
+    Carrot carrot2;
+    farm.plant(0, 0, &carrot1);
+    farm.plant(0, 0, &carrot2);
+    REQUIRE(farm.get_symbol(0, 0) == "@");
+}
+
+TEST_CASE("Returns message for harvesting")
+{
+    Player player;
+    Farm farm(2, 2, &player);
+    farm.harvest(0, 0);
+
+    player.move_right();
+
+    REQUIRE(farm.get_symbol(0, 0) == ".");
+}
+
+TEST_CASE("Returns message for harvesting (not ready)")
+{
+    Player player;
+    Farm farm(2, 2, &player);
+    Carrot carrot;
+
+    farm.plant(0, 1, &carrot);
+
+    farm.harvest(0, 1);
+
+    REQUIRE(farm.get_symbol(0, 1) == "v");
+}
