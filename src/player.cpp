@@ -12,10 +12,37 @@ int Player::column()
 
 void Player::move_right()
 {
-    current_column += 1;
+
+    if (current_column < max_columns - 1)
+    {
+
+        current_column += 1;
+    }
 }
 
 void Player::move_down()
 {
-    current_row += 1;
+
+    if (current_row < max_rows - 1)
+    {
+        current_row += 1;
+    }
+}
+
+void Player::move_up()
+{
+
+    if (current_row > 0)
+    {
+        current_row -= 1;
+    }
+}
+
+void Player::move_left()
+{
+
+    if (current_column > 0)
+    {
+        current_column -= 1;
+    }
 }

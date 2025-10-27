@@ -6,4 +6,5 @@ class Plot
 {
 public:
     virtual std::string symbol() = 0;
+    virtual ~Plot() = default;
 };
