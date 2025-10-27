@@ -61,9 +61,15 @@ void Farm::harvest(int row, int column)
 
   Carrot *carrot = dynamic_cast<Carrot *>(plots[row][column]);
 
-  std::cout << carrot->isMature() << std::endl;
-  if (carrot && carrot->isMature())
+  if (!carrot)
   {
+    std::cout << "This plot does not contain a carrot." << std::endl;
+    return;
+  }
+
+  if (carrot->isMature())
+  {
+    std::cout << "Harvesting a carrot." << std::endl;
     delete carrot;
     plots[row][column] = new Soil();
   }
