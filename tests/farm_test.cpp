@@ -60,7 +60,7 @@ TEST_CASE("it allows us to plant a carrot")
     Farm farm(1, 2, &player);
     Carrot carrot;
     farm.plant(0, 1, &carrot);
-    REQUIRE(farm.get_symbol(0, 1) == "v");
+    REQUIRE(farm.get_symbol(0, 1) == "-");
 }
 
 TEST_CASE("it allows to plant")
@@ -70,7 +70,7 @@ TEST_CASE("it allows to plant")
     Carrot carrot;
     farm.plant(0, 0, &carrot);
     player.move_right();
-    REQUIRE(farm.get_symbol(0, 0) == "v");
+    REQUIRE(farm.get_symbol(0, 0) == "-");
 }
 
 TEST_CASE("it prevents from planting at an occupied spot")
@@ -105,5 +105,34 @@ TEST_CASE("Returns message for harvesting (not ready)")
 
     farm.harvest(0, 1);
 
-    REQUIRE(farm.get_symbol(0, 1) == "v");
+    REQUIRE(farm.get_symbol(0, 1) == "-");
+}
+
+TEST_CASE("plants grow by one day at the end of the day")
+{
+
+    Player player;
+    Farm farm(1, 2, &player);
+    Carrot carrot;
+
+    farm.plant(0, 1, &carrot);
+    farm.end_day();
+
+    REQUIRE(farm.get_symbol(0, 1) == "'");
+}
+
+TEST_CASE("watering speeds up growth")
+{
+
+    Player player;
+    Farm farm(1, 2, &player);
+    Carrot carrot;
+
+    farm.plant(0, 1, &carrot);
+
+    farm.water(0, 1);
+
+    farm.end_day();
+
+    REQUIRE(farm.get_symbol(0, 1) == "V");
 }

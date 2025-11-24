@@ -5,6 +5,10 @@
 #include "src/farmprinter.hpp"
 #include "src/carrot.hpp"
 #include "src/ansi_clear.hpp"
+#include "src/lettuce.hpp"
+#include "src/spinach.hpp"
+#include "src/beet.hpp"
+#include "src/brussels.hpp"
 
 int main()
 {
@@ -19,7 +23,9 @@ int main()
     ansi_clear();
     std::cout << "Day: " << farm.get_day() << std::endl;
     std::cout << printer.pp() << std::endl;
-    std::cout << "Controls: w - up, a - left, s - down, d - right, c - plant carrot, h - harvest, e - end day, q - quit" << std::endl;
+    std::cout << "Controls: w - up, a - left, s - down, d - right" << std::endl;
+    std::cout << "Planting: c - carrot, l - lettuce, p - spinach, b - beet, r - brussels sprouts\n";
+    std::cout << "Actions: wt - water, h - harvest, e - end day, q - quit\n\n";
     std::cin >> player_input;
 
     if (player_input == "q")
@@ -42,11 +48,32 @@ int main()
     {
       player.move_down();
     }
+
     else if (player_input == "c")
     {
-      Carrot *carrot = new Carrot();
-      farm.plant(player.row(), player.column(), carrot);
+
+      farm.plant(player.row(), player.column(), new Carrot());
     }
+    else if (player_input == "l")
+    {
+
+      farm.plant(player.row(), player.column(), new Lettuce());
+    }
+    else if (player_input == "p")
+    {
+
+      farm.plant(player.row(), player.column(), new Spinach());
+    }
+    else if (player_input == "b")
+    {
+
+      farm.plant(player.row(), player.column(), new Beet());
+    }
+    else if (player_input == "r")
+    {
+      farm.plant(player.row(), player.column(), new Brussels());
+    }
+
     else if (player_input == "e")
     {
       farm.end_day();
@@ -55,6 +82,12 @@ int main()
     {
 
       farm.harvest(player.row(), player.column());
+    }
+
+    else if (player_input == "wt")
+    {
+
+      farm.water(player.row(), player.column());
     }
     else
     {

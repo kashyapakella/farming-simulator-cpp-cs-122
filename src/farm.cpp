@@ -5,6 +5,11 @@
 #include "farm.hpp"
 #include "soil.hpp"
 #include "carrot.hpp"
+#include "lettuce.hpp"
+#include "spinach.hpp"
+#include "brussels.hpp"
+#include "beet.hpp"
+#include "vegetable.hpp"
 
 Farm::Farm(int rows, int columns, Player *player) : rows(rows), columns(columns), player(player), day_count(1)
 {
@@ -59,23 +64,23 @@ void Farm::plant(int row, int column, Plot *plot)
 void Farm::harvest(int row, int column)
 {
 
-  Carrot *carrot = dynamic_cast<Carrot *>(plots[row][column]);
+  Vegetable *veg = dynamic_cast<Vegetable *>(plots[row][column]);
 
-  if (!carrot)
+  if (!veg)
   {
-    std::cout << "This plot does not contain a carrot." << std::endl;
+    std::cout << "There is nothing to harvest here!" << std::endl;
     return;
   }
 
-  if (carrot->isMature())
+  if (veg->isAdult())
   {
-    std::cout << "Harvesting a carrot." << std::endl;
-    delete carrot;
+    std::cout << "Harvested." << std::endl;
+    delete veg;
     plots[row][column] = new Soil();
   }
   else
   {
-    std::cout << "The carrot is not ready to harvest." << std::endl;
+    std::cout << "Not mature yet." << std::endl;
   }
 }
 
@@ -90,13 +95,19 @@ void Farm::end_day()
     for (int j = 0; j < columns; j++)
     {
 
-      Plot *current_plot = plots[i][j];
+      Vegetable *v = dynamic_cast<Vegetable *>(plots[i][j]);
 
-      if (current_plot && dynamic_cast<Carrot *>(current_plot))
+      int amount;
+
+      if (v)
       {
+        int amount = 1;
 
-        Carrot *carrot = dynamic_cast<Carrot *>(current_plot);
-        carrot->grow();
+        if (v->isWatered())
+        {
+          amount = 2;
+        }
+        v->grow(amount);
       }
     }
   }
@@ -106,4 +117,18 @@ int Farm::get_day()
 {
 
   return day_count;
+}
+
+void Farm::water(int row, int column)
+{
+
+  Vegetable *veg = dynamic_cast<Vegetable *>(plots[row][column]);
+
+  if (!veg)
+  {
+    std::cout << "There is nothing here to water.";
+    return;
+  }
+
+  veg->water();
 }

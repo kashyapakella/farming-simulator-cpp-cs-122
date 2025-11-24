@@ -24,4 +24,5 @@ public:
     void end_day();
     int get_day();
     void harvest(int row, int column);
+    void water(int row, int column);
 };

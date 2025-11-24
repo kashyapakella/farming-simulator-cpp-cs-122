@@ -2,36 +2,12 @@
 
 #include "carrot.hpp"
 
-Carrot::Carrot()
+Carrot::Carrot() : Vegetable(1, 2)
 {
-
-    is_mature = false;
 }
 
-std::string Carrot::symbol()
-{
-    if (is_mature)
-    {
-
-        return "V";
-    }
-    else
-    {
-        return "v";
-    }
-}
-
-void Carrot::grow()
+std::string Carrot::adult_symbol()
 {
 
-    if (!is_mature)
-    {
-        is_mature = true;
-    }
-}
-
-bool Carrot::isMature() const
-{
-
-    return is_mature;
+    return "V";
 }

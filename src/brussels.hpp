@@ -1,12 +1,11 @@
 #pragma once
 
-#include <string>
-
 #include "vegetable.hpp"
 
-class Carrot : public Vegetable
+class Brussels : public Vegetable
 {
+
 public:
-    Carrot();
+    Brussels();
     std::string adult_symbol() override;
 };
